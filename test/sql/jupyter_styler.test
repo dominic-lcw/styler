@@ -1,0 +1,23 @@
+# name: test/sql/jupyter_styler.test
+# description: test jupyter_styler extension
+# group: [jupyter_styler]
+
+# Before we load the extension, this will fail
+statement error
+SELECT jupyter_styler('Sam');
+----
+Catalog Error: Scalar Function with name jupyter_styler does not exist!
+
+# Require statement will ensure this test is run with this extension loaded
+require jupyter_styler
+
+# Confirm the extension works
+query I
+SELECT jupyter_styler('Sam');
+----
+JupyterStyler Sam 🐥
+
+query I
+SELECT jupyter_styler_openssl_version('Michael') ILIKE 'JupyterStyler Michael, my linked OpenSSL version is OpenSSL%';
+----
+true
